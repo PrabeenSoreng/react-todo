@@ -16,8 +16,28 @@ class App extends Component {
     return <div className="todo-list">{this.getTodos()}</div>;
   }
 
+  handleChange(id) {
+    this.setState(prevState => {
+      const updateTodos = prevState.todos.map(todo => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      });
+      return {
+        todos: updateTodos
+      };
+    });
+  }
+
   getTodos() {
-    return this.state.todos.map(todo => <TodoItem key={todo.id} data={todo} />);
+    return this.state.todos.map(todo => (
+      <TodoItem
+        key={todo.id}
+        data={todo}
+        handleChange={this.handleChange.bind(this)}
+      />
+    ));
   }
 }
 
